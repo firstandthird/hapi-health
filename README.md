@@ -1,0 +1,2 @@
+# hapi-healthcheck
+server monitoring
