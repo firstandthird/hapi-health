@@ -1,0 +1,52 @@
+{
+  "name": "hapi-healthcheck",
+  "version": "1.0.0",
+  "description": "Server monitoring",
+  "main": "index.js",
+  "scripts": {
+    "test": "lab --leaks -e test -c ",
+    "coveralls": "lab -r lcov | coveralls"
+  },
+  "engine": {
+    "node": ">=8.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/firstandthird/hapi-healthcheck.git"
+  },
+  "keywords": [
+    "hapi",
+    "healthcheck",
+    "monitoring"
+  ],
+  "eslintConfig": {
+    "extends": "firstandthird",
+    "rules": {
+      "no-underscore-dangle": 0
+    },
+    "parserOptions": {
+      "ecmaVersion": 2017
+    }
+  },
+  "author": "First+Third",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/firstandthird/hapi-healthcheck/issues"
+  },
+  "homepage": "https://github.com/firstandthird/hapi-healthcheck#readme",
+  "dependencies": {
+    "async": "^2.6.0",
+    "boom": "^7.1.1",
+    "str2fn": "^3.0.0"
+  },
+  "devDependencies": {
+    "code": "^5.1.2",
+    "coveralls": "^3.0.0",
+    "eslint": "^4.11.0",
+    "eslint-config-firstandthird": "^4.0.1",
+    "eslint-plugin-import": "^2.6.1",
+    "hapi": "^17.2.0",
+    "lab": "^15.1.2",
+    "nodemon": "^1.14.7"
+  }
+}
