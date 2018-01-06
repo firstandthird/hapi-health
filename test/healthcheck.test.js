@@ -95,8 +95,6 @@ lab.test('custom checks', async() => {
 
   const result = await wreck.get('http://localhost:8000/health', { json: 'force' });
 
-  console.log(result.payload);
-
   code.expect(result.payload).to.be.an.object();
   code.expect(result.payload.host).to.equal(server.info.host);
   code.expect(result.payload.env).to.equal(process.env.NODE_ENV);
