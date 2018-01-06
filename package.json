@@ -4,8 +4,8 @@
   "description": "Server monitoring",
   "main": "index.js",
   "scripts": {
-    "example": "NODE_ENV=example nodemon example/index.js",
-    "test": "lab --leaks -e test -c "
+    "test": "lab --leaks -e test -c ",
+    "coveralls": "lab -r lcov | coveralls"
   },
   "engine": {
     "node": ">=8.0.0"
