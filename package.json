@@ -1,5 +1,5 @@
 {
-  "name": "hapi-healthcheck",
+  "name": "@firstandthird/hapi-healthcheck",
   "version": "1.0.0",
   "description": "Server monitoring",
   "main": "index.js",
@@ -48,5 +48,8 @@
     "hapi": "^17.2.0",
     "lab": "^15.1.2",
     "nodemon": "^1.14.7"
+  },
+  "directories": {
+    "test": "test"
   }
 }
