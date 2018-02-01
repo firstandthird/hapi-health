@@ -1,6 +1,6 @@
 {
-  "name": "@firstandthird/hapi-healthcheck",
-  "version": "1.0.0",
+  "name": "hapi-health",
+  "version": "1.0.1",
   "description": "Server monitoring",
   "main": "index.js",
   "scripts": {
@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/firstandthird/hapi-healthcheck.git"
+    "url": "git+https://github.com/firstandthird/hapi-health.git"
   },
   "keywords": [
     "hapi",
@@ -31,9 +31,9 @@
   "author": "First+Third",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/firstandthird/hapi-healthcheck/issues"
+    "url": "https://github.com/firstandthird/hapi-health/issues"
   },
-  "homepage": "https://github.com/firstandthird/hapi-healthcheck#readme",
+  "homepage": "https://github.com/firstandthird/hapi-health#readme",
   "dependencies": {
     "async": "^2.6.0",
     "boom": "^7.1.1",
