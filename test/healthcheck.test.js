@@ -63,7 +63,6 @@ lab.test('token passed', async() => {
   code.expect(result.payload.memory).to.be.an.object();
 });
 
-
 lab.test('custom checks', async() => {
   server.method('get.test', () => ({
     test: 1
@@ -155,4 +154,40 @@ lab.test('check missing method', async() => {
   } catch (e) {
     code.expect(e).to.exist();
   }
+});
+
+lab.test('can pass in auth', async() => {
+  const boom = require('boom');
+  server.auth.scheme('custom', () => ({
+    authenticate(request, h) {
+      const authorization = request.query ? request.query.authorization : undefined;
+      if (!authorization) {
+        throw boom.unauthorized(null, 'Custom');
+      }
+      return h.authenticated({ credentials: { user: 'john' } });
+    }
+  }));
+  server.auth.strategy('default', 'custom');
+  await server.register({
+    plugin: hapiHealthcheck,
+    options: {
+      auth: 'default'
+    }
+  });
+
+  await server.start();
+  let errCalled = false;
+  try {
+    await wreck.get('http://localhost:8000/health', { json: 'force' });
+  } catch (e) {
+    errCalled = e;
+  }
+  const result = await wreck.get('http://localhost:8000/health?authorization=pass', { json: 'force' });
+  code.expect(errCalled.toString()).to.equal('Error: Response Error: 401 Unauthorized');
+  code.expect(result.payload).to.be.an.object();
+  code.expect(result.payload.host).to.equal(server.info.host);
+  code.expect(result.payload.env).to.equal(process.env.NODE_ENV);
+  code.expect(result.payload.uptime).to.exist();
+  code.expect(result.payload.cpu).to.be.an.object();
+  code.expect(result.payload.memory).to.be.an.object();
 });
