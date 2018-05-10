@@ -3,6 +3,7 @@ const Boom = require('boom');
 const str2fn = require('str2fn');
 
 const defaults = {
+  auth: false,
   token: false,
   endpoint: '/health',
   checks: []
