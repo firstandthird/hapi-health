@@ -1,6 +1,6 @@
 {
   "name": "hapi-health",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Server monitoring",
   "main": "index.js",
   "scripts": {
