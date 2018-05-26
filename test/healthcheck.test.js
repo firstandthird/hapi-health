@@ -191,3 +191,26 @@ lab.test('can pass in auth', async() => {
   code.expect(result.payload.cpu).to.be.an.object();
   code.expect(result.payload.memory).to.be.an.object();
 });
+
+lab.test('default options', async() => {
+  await server.register({
+    plugin: hapiHealthcheck,
+    options: {
+      envs: [
+        'NODE',
+        'NODE_ENV',
+        'PATH'
+      ]
+    }
+  });
+  await server.start();
+
+  const result = await wreck.get('http://localhost:8000/health', { json: 'force' });
+
+  code.expect(result.payload).to.be.an.object();
+  code.expect(result.payload.env).to.equal(process.env.NODE_ENV);
+  code.expect(Object.keys(result.payload.envs).length).to.equal(3);
+  code.expect(result.payload.envs.NODE).to.equal(process.env.NODE);
+  code.expect(result.payload.envs.NODE_ENV).to.equal(process.env.NODE_ENV);
+  code.expect(result.payload.envs.PATH).to.equal(process.env.PATH);
+});
