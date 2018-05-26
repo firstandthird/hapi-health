@@ -1,6 +1,7 @@
 const async = require('async');
 const Boom = require('boom');
 const str2fn = require('str2fn');
+const package = require('./package.json');
 
 const defaults = {
   auth: false,
@@ -22,7 +23,8 @@ const register = function(server, options) {
       env: process.env.NODE_ENV,
       uptime: Math.floor(process.uptime()),
       cpu: process.cpuUsage(),
-      memory: process.memoryUsage()
+      memory: process.memoryUsage(),
+      version: package.version
     };
 
     await async.each(settings.checks, async check => {
