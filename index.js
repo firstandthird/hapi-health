@@ -6,7 +6,8 @@ const defaults = {
   auth: false,
   token: false,
   endpoint: '/health',
-  checks: []
+  checks: [],
+  envs: [] // list of environment variables to include in report
 };
 
 const register = function(server, options) {
@@ -24,6 +25,13 @@ const register = function(server, options) {
       cpu: process.cpuUsage(),
       memory: process.memoryUsage()
     };
+
+    if (settings.envs.length) {
+      output.envs = settings.envs.reduce((memo, varName) => {
+        memo[varName] = process.env[varName];
+        return memo;
+      }, {});
+    }
 
     await async.each(settings.checks, async check => {
       if (!check.name || !check.method) {
