@@ -4,6 +4,7 @@ const lab = exports.lab = Lab.script();
 const code = require('code');
 const wreck = require('wreck');
 const hapiHealthcheck = require('../index.js');
+const version = require('../package.json').version;
 let server;
 
 lab.beforeEach(() => {
@@ -19,13 +20,14 @@ lab.test('default options', async() => {
   await server.start();
 
   const result = await wreck.get('http://localhost:8000/health', { json: 'force' });
-
   code.expect(result.payload).to.be.an.object();
   code.expect(result.payload.host).to.equal(server.info.host);
   code.expect(result.payload.env).to.equal(process.env.NODE_ENV);
   code.expect(result.payload.uptime).to.exist();
   code.expect(result.payload.cpu).to.be.an.object();
+  code.expect(result.payload.version).to.be.a.string();
   code.expect(result.payload.memory).to.be.an.object();
+
 });
 
 lab.test('token enabled but not passed', async() => {
@@ -97,6 +99,7 @@ lab.test('custom checks', async() => {
   code.expect(result.payload).to.be.an.object();
   code.expect(result.payload.host).to.equal(server.info.host);
   code.expect(result.payload.env).to.equal(process.env.NODE_ENV);
+  code.expect(result.payload.version).to.equal(version);
   code.expect(result.payload.uptime).to.exist();
   code.expect(result.payload.cpu).to.be.an.object();
   code.expect(result.payload.memory).to.be.an.object();
