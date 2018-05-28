@@ -1,7 +1,8 @@
 const async = require('async');
 const Boom = require('boom');
 const str2fn = require('str2fn');
-const package = require('./package.json');
+const path = require('path');
+const package = require(path.join(process.cwd(), 'package.json'));
 
 const defaults = {
   auth: false,
