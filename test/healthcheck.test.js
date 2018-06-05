@@ -27,7 +27,6 @@ lab.test('default options', async() => {
   code.expect(result.payload.cpu).to.be.an.object();
   code.expect(result.payload.version).to.be.a.string();
   code.expect(result.payload.memory).to.be.an.object();
-
 });
 
 lab.test('token enabled but not passed', async() => {
@@ -192,6 +191,37 @@ lab.test('can pass in auth', async() => {
   code.expect(result.payload.env).to.equal(process.env.NODE_ENV);
   code.expect(result.payload.uptime).to.exist();
   code.expect(result.payload.cpu).to.be.an.object();
+  code.expect(result.payload.memory).to.be.an.object();
+});
+
+lab.test('if auth is false, turn off the default auth', async() => {
+  const boom = require('boom');
+  server.auth.scheme('custom', () => ({
+    authenticate(request, h) {
+      const authorization = request.query ? request.query.authorization : undefined;
+      if (!authorization) {
+        throw boom.unauthorized(null, 'Custom');
+      }
+      return h.authenticated({ credentials: { user: 'john' } });
+    }
+  }));
+  server.auth.strategy('default', 'custom');
+  server.auth.default('default');
+  await server.register({
+    plugin: hapiHealthcheck,
+    options: {
+      auth: false
+    }
+  });
+  await server.start();
+
+  const result = await wreck.get('http://localhost:8000/health', { json: 'force' });
+  code.expect(result.payload).to.be.an.object();
+  code.expect(result.payload.host).to.equal(server.info.host);
+  code.expect(result.payload.env).to.equal(process.env.NODE_ENV);
+  code.expect(result.payload.uptime).to.exist();
+  code.expect(result.payload.cpu).to.be.an.object();
+  code.expect(result.payload.version).to.be.a.string();
   code.expect(result.payload.memory).to.be.an.object();
 });
 
