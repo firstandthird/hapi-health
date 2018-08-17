@@ -59,8 +59,10 @@ const register = function(server, options) {
     path: settings.endpoint,
     handler
   };
-  // set auth to false to explicitly turn off the
-  // registered default server strategy: 
+  // if auth is undefined set it to false to avoid the default auth:
+  if (options.auth === undefined || options.auth === null) {
+    options.auth = false;
+  }
   if (options.auth || options.auth === false) {
     routeConfig.config = {
       auth: options.auth
