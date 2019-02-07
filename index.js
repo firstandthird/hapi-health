@@ -34,22 +34,19 @@ const register = function(server, options) {
         return memo;
       }, {});
     }
-    await Promise.all(settings.checks.map(check =>
-      new Promise(async (resolve, reject) => {
-        if (!check.name || !check.method) {
-          return reject(new Boom('Invalid check'));
+    await Promise.all(settings.checks.map(async check => {
+      if (!check.name || !check.method) {
+        throw new Boom('Invalid check');
+      }
+      output[check.name] = await str2fn.execute(
+        check.method,
+        server.methods,
+        {
+          request,
+          options: check.options
         }
-        output[check.name] = await str2fn.execute(
-          check.method,
-          server.methods,
-          {
-            request,
-            options: check.options
-          }
-        );
-        return resolve();
-      })
-    ));
+      );
+    }));
     return output;
   };
 
