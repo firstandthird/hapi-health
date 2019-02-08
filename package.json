@@ -35,7 +35,6 @@
   },
   "homepage": "https://github.com/firstandthird/hapi-health#readme",
   "dependencies": {
-    "async": "^2.6.0",
     "boom": "^7.1.1",
     "str2fn": "^3.0.0"
   },

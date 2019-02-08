@@ -1,4 +1,3 @@
-const async = require('async');
 const Boom = require('boom');
 const str2fn = require('str2fn');
 const path = require('path');
@@ -16,6 +15,7 @@ const register = function(server, options) {
   const settings = Object.assign({}, defaults, options);
 
   const handler = async (request, h) => {
+
     if (settings.token && settings.token !== request.query.token) {
       throw Boom.unauthorized();
     }
@@ -28,19 +28,16 @@ const register = function(server, options) {
       memory: process.memoryUsage(),
       version: package.version
     };
-
     if (settings.envs.length) {
       output.envs = settings.envs.reduce((memo, varName) => {
         memo[varName] = process.env[varName];
         return memo;
       }, {});
     }
-
-    await async.each(settings.checks, async check => {
+    await Promise.all(settings.checks.map(async check => {
       if (!check.name || !check.method) {
         throw new Boom('Invalid check');
       }
-
       output[check.name] = await str2fn.execute(
         check.method,
         server.methods,
@@ -49,8 +46,7 @@ const register = function(server, options) {
           options: check.options
         }
       );
-    });
-
+    }));
     return output;
   };
 
