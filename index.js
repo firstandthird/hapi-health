@@ -1,4 +1,4 @@
-const Boom = require('boom');
+const Boom = require('@hapi/boom');
 const str2fn = require('str2fn');
 const path = require('path');
 const package = require(path.join(process.cwd(), 'package.json'));
@@ -38,7 +38,7 @@ const register = function(server, options) {
       if (!check.name || !check.method) {
         throw new Boom('Invalid check');
       }
-      output[check.name] = await str2fn.execute(
+      output[check.name] = await str2fn(
         check.method,
         server.methods,
         {

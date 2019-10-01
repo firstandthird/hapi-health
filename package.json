@@ -35,18 +35,18 @@
   },
   "homepage": "https://github.com/firstandthird/hapi-health#readme",
   "dependencies": {
-    "boom": "^7.1.1",
-    "str2fn": "^3.0.0"
+    "@hapi/boom": "^7.3.0",
+    "str2fn": "^5.0.0"
   },
   "devDependencies": {
-    "code": "^5.1.2",
-    "coveralls": "^3.0.0",
-    "eslint": "^4.11.0",
-    "eslint-config-firstandthird": "^4.0.1",
-    "eslint-plugin-import": "^2.6.1",
-    "hapi": "^17.2.0",
-    "lab": "^15.1.2",
-    "nodemon": "^1.14.7"
+    "@hapi/code": "^5.2.4",
+    "coveralls": "^3.0.3",
+    "eslint": "^5.16.0",
+    "eslint-config-firstandthird": "^4.3.0",
+    "eslint-plugin-import": "^2.17.2",
+    "@hapi/hapi": "^18.1.0",
+    "@hapi/lab": "^18.0.2",
+    "nodemon": "^1.19.0"
   },
   "directories": {
     "test": "test"
